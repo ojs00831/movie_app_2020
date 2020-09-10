@@ -8,6 +8,7 @@ class Home extends React.Component {
     isLoading : true,
     movies: [],
   };
+  
   getMovies = async () => {
     const {
       data : {

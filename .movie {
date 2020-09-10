@@ -1,0 +1,156 @@
+warning: LF will be replaced by CRLF in src/App.js.
+The file will have its original line endings in your working directory
+[1mdiff --git a/src/App.js b/src/App.js[m
+[1mindex 5ce4c19..d0efacf 100644[m
+[1m--- a/src/App.js[m
+[1m+++ b/src/App.js[m
+[36m@@ -3,8 +3,8 @@[m [mimport './App.css';[m
+ import { HashRouter, Route } from 'react-router-dom';[m
+ import About from './routes/About';[m
+ import Home from './routes/Home';[m
+[31m-import Navigation from './components/Navigation';[m
+ import Detail from './routes/Detail';[m
+[32m+[m[32mimport Navigation from './components/Navigation';[m
+ [m
+ function App() {[m
+   return ([m
+[1mdiff --git a/src/components/Movie.js b/src/components/Movie.js[m
+[1mindex 7c9c2d4..9d838f2 100644[m
+[1m--- a/src/components/Movie.js[m
+[1m+++ b/src/components/Movie.js[m
+[36m@@ -3,13 +3,13 @@[m [mimport PropTypes from 'prop-types';[m
+ import './Movie.css';[m
+ import { Link } from 'react-router-dom';[m
+ [m
+[31m-function Movie({ title, year, summary, poster, genres }) {[m
+[32m+[m[32mfunction Movie({ id, title, year, summary, poster, genres }) {[m
+     return ([m
+         <div className="movie">[m
+             <Link[m
+                 to={{[m
+                     pathname: '/movie-detail',[m
+[31m-                    state: { year, title, summary, poster, genres },[m
+[32m+[m[32m                    state: { id },[m
+                 }}            [m
+             >[m
+                 <img src={poster} alt={title} title={title} />[m
+[1mdiff --git a/src/routes/Detail.css b/src/routes/Detail.css[m
+[1mindex e69de29..f7f2f9e 100644[m
+[1m--- a/src/routes/Detail.css[m
+[1m+++ b/src/routes/Detail.css[m
+[36m@@ -0,0 +1,30 @@[m
+[32m+[m[32m.container {[m
+[32m+[m[32m    height: 100%;[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    justify-content: center;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.loader {[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    height: 100vh;[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    justify-content: center;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    font-weight: 300;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.movie {[m
+[32m+[m[32m    display: grid;[m
+[32m+[m[32m    grid-template-columns: repeat(2, minmax(400px, 1fr));[m
+[32m+[m[32m    grid-gap: 100px;[m
+[32m+[m[32m    padding: 50px;[m
+[32m+[m[32m    width: 80%;[m
+[32m+[m[32m    padding-top: 70px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m@media screen and (max-width: 1090px) {[m
+[32m+[m[32m    .movie {[m
+[32m+[m[32m        grid-template-columns: 1fr;[m
+[32m+[m[32m        width: 100%[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/routes/Detail.js b/src/routes/Detail.js[m
+[1mindex 3600cc9..138dcd6 100644[m
+[1m--- a/src/routes/Detail.js[m
+[1m+++ b/src/routes/Detail.js[m
+[36m@@ -1,17 +1,65 @@[m
+ import React from 'react';[m
+[32m+[m[32mimport axios from 'axios';[m
+[32m+[m[32mimport MovieDetail from '../components/MovieDetail';[m
+[32m+[m[32mimport './Detail.css';[m
+ [m
+ class Detail extends React.Component {[m
+[32m+[m[32m    state = {[m[41m        [m
+[32m+[m[32m        isLoading : true,[m
+[32m+[m[32m        movie : {},[m
+[32m+[m[32m      };[m
+[32m+[m
+[32m+[m[32m      getMovie = async () => {[m
+[32m+[m[32m        const {[m
+[32m+[m[32m          data : {[m
+[32m+[m[32m            data: { movie },[m
+[32m+[m[32m          },[m
+[32m+[m[32m        } = await axios.get('https://yts-proxy.now.sh/movie_details.json?movie_id=10');[m[41m    [m
+[32m+[m[32m        this.setState({ isLoading: false, movie });[m
+[32m+[m[32m      }[m
+[32m+[m
+     componentDidMount() {[m
+         const { location, history } = this.props;[m
+         if (location.state === undefined) {[m
+             history.push('/');[m
+         }[m
+[32m+[m[32m        this.getMovie();[m
+     }[m
+ [m
+     render() {[m
+[31m-        const { location } = this.props;[m
+[32m+[m[32m        const { location } = this.props;[m[41m        [m
+[32m+[m[32m        const { isLoading, movie } = this.state;[m
+[32m+[m[41m        [m
+         if (location.state) {[m
+[31m-            return <span>{location.state.title}</span>[m
+[32m+[m[32m            return ([m
+[32m+[m[32m                <section className="container">[m
+[32m+[m[32m                  { isLoading[m[41m [m
+[32m+[m[32m                    ? ([m
+[32m+[m[32m                        <div className="loader">[m
+[32m+[m[32m                          <span className="loader__text">Loading.... </span>[m
+[32m+[m[32m                        </div>[m
+[32m+[m[32m                      )[m
+[32m+[m[32m                    : ([m
+[32m+[m[32m                        <div className="movie">[m[41m                          [m
+[32m+[m[32m                            <MovieDetail[m[41m [m
+[32m+[m[32m                                id = {movie.id}[m
+[32m+[m[32m                                key={movie.id}[m
+[32m+[m[32m                                year = {movie.year}[m
+[32m+[m[32m                                title = {movie.title}[m[41m                                                                [m
+[32m+[m[32m                                rating = {movie.rating}[m
+[32m+[m[32m                                runtime = {movie.runtime}[m
+[32m+[m[32m                                genres = {movie.genres}[m
+[32m+[m[32m                                description_full = {movie.description_full}[m
+[32m+[m[32m                                language = {movie.language}[m
+[32m+[m[32m                                mpa_rating = {movie.mpa_rating}[m
+[32m+[m[32m                                background_image = {movie.large_cover_image}[m
+[32m+[m[32m                                torrents = {movie.torrents}[m
+[32m+[m
+[32m+[m[32m                            />[m[41m                                       [m
+[32m+[m[32m                        </div>[m
+[32m+[m[32m                      )}[m
+[32m+[m[32m                </section>[m
+[32m+[m[32m              );[m
+         } else {[m
+             return null;[m
+         }[m
+[1mdiff --git a/src/routes/Home.js b/src/routes/Home.js[m
+[1mindex 369d24a..deb1305 100644[m
+[1m--- a/src/routes/Home.js[m
+[1m+++ b/src/routes/Home.js[m
+[36m@@ -8,6 +8,7 @@[m [mclass Home extends React.Component {[m
+     isLoading : true,[m
+     movies: [],[m
+   };[m
+[32m+[m[41m  [m
+   getMovies = async () => {[m
+     const {[m
+       data : {[m
