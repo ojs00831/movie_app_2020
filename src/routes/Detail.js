@@ -5,29 +5,30 @@ import './Detail.css';
 
 class Detail extends React.Component {
     state = {        
-        isLoading : true,
-        movie : {},
-      };
+      isLoading : true,
+      movie : {},
+    };    
 
-      getMovie = async () => {
-        const {
-          data : {
-            data: { movie },
-          },
-        } = await axios.get('https://yts-proxy.now.sh/movie_details.json?movie_id=10');    
-        this.setState({ isLoading: false, movie });
-      }
+    getMovie = async () => {           
+      const{detailMovieId} = this.props.location.state;       
+      const {
+        data : {
+          data: { movie },
+        },        
+      } = await axios.get('https://yts-proxy.now.sh/movie_details.json', {params: {movie_id: detailMovieId}});    
+      this.setState({ isLoading: false, movie });
+    }
 
     componentDidMount() {
-        const { location, history } = this.props;
+        const { location, history } = this.props;            
         if (location.state === undefined) {
             history.push('/');
-        }
+        }                        
         this.getMovie();
     }
 
     render() {
-        const { location } = this.props;        
+        const { location } = this.props;               
         const { isLoading, movie } = this.state;
         
         if (location.state) {

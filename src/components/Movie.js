@@ -9,7 +9,7 @@ function Movie({ id, title, year, summary, poster, genres }) {
             <Link
                 to={{
                     pathname: '/movie-detail',
-                    state: { id },
+                    state: { detailMovieId : id },
                 }}            
             >
                 <img src={poster} alt={title} title={title} />
