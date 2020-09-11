@@ -32,15 +32,15 @@ class Detail extends React.Component {
         
         if (location.state) {
             return (
-                <section className="container">
+                <section className="detailContainer">
                   { isLoading 
                     ? (
-                        <div className="loader">
-                          <span className="loader__text">Loading.... </span>
+                        <div className="detailLoader">
+                          <span className="detailLoader__text">Loading.... </span>
                         </div>
                       )
                     : (
-                        <div className="movie">                          
+                        <div className="detailMovie">                          
                             <MovieDetail 
                                 id = {movie.id}
                                 key={movie.id}

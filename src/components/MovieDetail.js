@@ -4,32 +4,32 @@ import './MovieDetail.css';
 
 function MovieDetail({ id, title, year, rating, runtime, genres, description_full, language, mpa_rating, background_image, torrents }) {
     return (
-        <div className="movie">           
+        <div className="movieDetail">           
             <img src={background_image} alt={title} title={title} />
-            <div className="movie_data">
-                <h3 className="movie__title">
+            <div className="movieDetail_data">
+                <h3 className="movieDetail__title">
                     {title}
                 </h3>
-                <h5 className="movie__year">{year}</h5>
-                <h5 className="movie__rating">{rating}</h5>
-                <h5 className="movie__runtime">{runtime}</h5>
-                <ul className="movie__genres">
+                <h5 className="movieDetail__year">{year}</h5>
+                <h5 className="movieDetail__rating">{rating}</h5>
+                <h5 className="movieDetail__runtime">{runtime}</h5>
+                <ul className="movieDetail__genres">
                     {genres.map((genre, index) => {
                         return (
-                            <li key={index} className="movie__genre">
+                            <li key={index} className="movieDetail__genre">
                                 {genre}
                             </li>
                         );
                     })}
                 </ul>       
-                <h5 className="movie__description_full">{description_full}</h5>
-                <h5 className="movie__language">{language}</h5>
-                <h5 className="movie__mpa_rating">{mpa_rating}</h5>
-                <ul className="movie__torrents">
+                <h5 className="movieDetail__description_full">{description_full}</h5>
+                <h5 className="movieDetail__language">{language}</h5>
+                <h5 className="movieDetail__mpa_rating">{mpa_rating}</h5>
+                <ul className="movieDetail__torrents">
                     {torrents.map((torrent, index) => {
                         return (
                             <div key={index}>
-                                <li className="movie__genre">
+                                <li className="movieDetail__genre">
                                     {torrent.url}
                                 </li>
                                 <li>
