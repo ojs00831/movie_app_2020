@@ -47,7 +47,13 @@
 }
 
 .movieDetail__genres li,
-.movieDetail .movieDetail__year {
+.movieDetail .movieDetail__year,
+.movieDetail__rating,
+.movieDetail .movieDetail__runtime,
+.movieDetail .movieDetail__description_full,
+.movieDetail .movieDetail__language,
+.movieDetail .movieDetail__mpa_rating,
+.movieDetail .movieDetail__torrents {
     margin-right: 10px;
     font-size: 14px;
 }
