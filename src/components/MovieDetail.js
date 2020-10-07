@@ -18,7 +18,7 @@ function MovieDetail({ id, title, year, rating, runtime, genres, description_ful
                 <ul className="movieDetail__genres">
                     {genres.map((genre, index) => {
                         return (
-                            <li key={index} className="movieDetail__genre">
+                            <li key={index} className="movieDetail__genres__genre">
                                 {genre}
                             </li>
                         );
@@ -31,7 +31,7 @@ function MovieDetail({ id, title, year, rating, runtime, genres, description_ful
                     {torrents.map((torrent, index) => {
                         return (
                             <div key={index}>
-                                <li className="movieDetail__genre">
+                                <li className="movieDetail__torrents__url">
                                     {torrent.url}
                                 </li>
                                 <li>
